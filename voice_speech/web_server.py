@@ -100,8 +100,9 @@ async def audio_websocket_endpoint(websocket: WebSocket):
 
     voice = websocket.query_params.get("voice") or "Aoede"
     language = websocket.query_params.get("language") or "auto"
+    gender = websocket.query_params.get("gender")
     logger.info(
-        f"Browser client connected to /ws (voice={voice}, language={language}) "
+        f"Browser client connected to /ws (voice={voice}, language={language}, gender={gender}) "
         f"[{session_manager.active_sessions}/{session_manager.max_concurrent_sessions} sessions]"
     )
 
@@ -116,6 +117,7 @@ async def audio_websocket_endpoint(websocket: WebSocket):
             session_mgr=session_manager,
             voice=voice,
             language=language,
+            gender=gender,
         )
     except WebSocketDisconnect:
         logger.info("Browser client disconnected cleanly.")
